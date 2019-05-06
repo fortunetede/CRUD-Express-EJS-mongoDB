@@ -8,15 +8,16 @@ const Books = require('../models/books')
 
 exports.allBooksController = (req, res, next) => {
     const _user = req.cookies['userProfile']
-    const books = Books.find()
-        .populate('creator')
-        .then(books => {
-            context = {
-                user: _user,
-                books: books
-            }
+    const getBooks = async () => { return await Books.find().populate('creator') }
+    try {
+        getBooks().then(books => {
+            context = {  user: _user,  books: books }
             res.render('books', context)
         })
+    } catch (err) {
+        console.log(err)
+    }
+    
 }
 
 exports.addBookController = (req, res, next) => {
@@ -54,9 +55,7 @@ exports.addBookController = (req, res, next) => {
 
 exports.bookDetailController = (req, res, next) => {
     const _user = req.cookies['userProfile']
-    Books.findOne({
-            _id: req.params.bookId
-        })
+    Books.findOne({_id: req.params.bookId })
         .then(book => {
             context = {
                 user: _user,
@@ -114,15 +113,13 @@ exports.searchBookController = (req, res) => {
     var regex = new RegExp(req.body.search, 'i');
     var query = Books.find({
         title: regex
-    }, )
+    })
     query.exec(function (err, books) {
         if (!err) {
             context = {
                 books: books
             }
             res.render('ajax_search', context)
-        } else {
-
         }
     });
 }
