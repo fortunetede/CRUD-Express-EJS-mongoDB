@@ -1,0 +1,6 @@
+{
+    "env": {
+        "MONGO_ATLAS_PW": "taskcode",
+        "JWT_KEY": "SECRET"
+    }
+}

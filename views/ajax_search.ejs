@@ -1,0 +1,15 @@
+<ul style="list-style:none; padding-left:2px; margin-top:15px; color:black">
+    <% for(var i=0; i < books.length; i++) { %>
+    <li>
+
+        <a href="/book_detail/<%= books[i]._id %>">
+            <span><%= i %></span> |
+            <span><%= books[i].title %></span> |
+            <span><%= books[i].genre %></span> |
+            <span><%= books[i].author %></span>
+        </a>
+
+        <hr>
+    </li>
+    <% } %>
+</ul>
